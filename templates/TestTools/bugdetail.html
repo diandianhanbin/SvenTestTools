@@ -1,0 +1,64 @@
+{% extends "TestTools/base.html" %}
+{% load custom_markdown %}
+{% block body %}
+    <script src="/static/js/bug.js"></script>
+    <body>
+    {% if errmsg == "True" %}
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">项目名称:</label>
+                <label class="control-label">{{ record.Project }}</label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">缺陷标题:</label>
+                <label class="control-label">{{ record.bugTitle }}</label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">提出日期:</label>
+                <label class="control-label">{{ record.Date }}</label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">问题终端:</label>
+                <label class="control-label">{{ record.Terminal }}</label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">开发人员:</label>
+                <label class="control-label">{{ record.Developer }}</label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">测试人员:</label>
+                <label class="control-label">{{ record.Tester }}</label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">缺陷状态:</label>
+                <label class="control-label">{{ record.bugStatus }}</label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">缺陷描述:</label>
+                <div class="col-sm-8">
+                    <p>{{ record.bugDescription | custom_markdown }}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">重现步骤:</label>
+                <div class="col-sm-8">
+                    <p>{{ record.bugStep | custom_markdown }}</p>
+                </div>
+            </div>
+        </form>
+        <a href="{% url 'newbug' 'update' record.bugID %}">
+            <div class="col-md-5">
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-default">修改缺陷</button>
+            </div>
+            <div class="col-md-5">
+            </div>
+        </a>
+    {% elif errmsg == "False" %}
+        <script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8"
+                homePageUrl="http://yoursite.com/yourPage.html" homePageName="回到我的主页"></script>
+    {% endif %}
+
+    </body>
+{% endblock %}

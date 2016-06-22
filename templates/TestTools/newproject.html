@@ -1,0 +1,17 @@
+{% extends "TestTools/base.html" %}
+{% block body %}
+    {% if errmsg == "True" %}
+        <div class="alert alert-success" role="alert">新建项目成功</div>
+    {% elif errmsg == "False" %}
+        <div class="alert alert-danger" role="alert">新建项目失败</div>
+    {% endif %}
+    <form method="post" action="{% url 'newproject' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>请输入项目名称</label>
+            <input class="form-control" placeholder="请输入项目名称" name="project">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+
+{% endblock %}
