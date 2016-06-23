@@ -6,27 +6,15 @@ $(document).ready(function () {
 });
 
 function getallbug() {
+    /**
+     * 获取所有Bug的方法
+     * 获取之后调用修改样式的方法
+     */
     $.getJSON('/testtools/getallbug/', function (data) {
         for (var i = 0; i < data.length; i++) {
             $("#bugbody").append(
                 "<tr id='" + i + "'><td>" + data[i]['ID'] + "</td><td>" + data[i]['Terminal'] + "</td><td>" + data[i]['BugTitle'] + "</td><td>" + data[i]['Developer'] + "</td><td>" + changeBugStatusName(data[i]['Status']) + "</td><td><a href='/testtools/bugdetail/" + data[i]['ID'] + "' target='_blank'>" + "明细" + "</a></td></td></tr>"
             );
-            // switch (data[i]['Status']) {
-            //     case "1":
-            //         $("#" + i).addClass("danger");
-            //         break;
-            //     case "2":
-            //         $("#" + i).addClass("warning");
-            //         break;
-            //     case "3":
-            //         $("#" + i).addClass("success");
-            //         break;
-            //     case "4":
-            //         $("#" + i).addClass("success");
-            //         break;
-            //     default:
-            //         $("#" + i).addClass("info");
-            // }
         }
         setButtonCSS();
         getBugRecordAccordingCondition();
@@ -35,6 +23,9 @@ function getallbug() {
 }
 
 function getnewbugelements() {
+    /**
+     * 新建缺陷时从配置文件读取内容填充
+     */
     $.getJSON('/testtools/getnewbugelements', function (data) {
         console.info(data);
         for (var i = 0; i < data['terminal'].length; i++) {
@@ -66,6 +57,9 @@ function getnewbugelements() {
 }
 
 function getOneBug(bugid) {
+    /**
+     * 获取单个缺陷的内容
+     */
     $.getJSON('/testtools/getonebug/' + bugid, function (data) {
         console.info(data);
         $("#bugTitle").val(data['BugTitle']);
@@ -80,6 +74,10 @@ function getOneBug(bugid) {
 }
 
 function setBadge(badgeNum) {
+    /**
+     * 设置徽章内容
+     * @param {int} badgeNum   徽章的数量
+     */
     for (var i = 0; i < badgeNum.length; i++) {
         var j = i + 1;
         ele = "status" + j;
@@ -88,6 +86,9 @@ function setBadge(badgeNum) {
 }
 
 function setButtonCSS() {
+    /**
+     * 设置bug状态的按钮样式
+     */
     $("#button1").addClass("btn btn-danger");
     $("#button2").addClass("btn btn-warning");
     $("#button3").addClass("btn btn-success");
@@ -96,7 +97,11 @@ function setButtonCSS() {
 
 
 function getBugRecordAccordingCondition() {
+    /**
+     * 点击按钮获取不同状态的缺陷归集
+     */
     $("#statusButton button").on("click", function () {
+        // 点击按钮的方法
         // alert($(this).attr("id"))
         var buttonid = $(this).attr("id");
         var project = $("#selectProject").val();
@@ -111,9 +116,11 @@ function getBugRecordAccordingCondition() {
                     "<tr id='" + i + "'><td>" + result[i]['ID'] + "</td><td>" + result[i]['Terminal'] + "</td><td>" + result[i]['BugTitle'] + "</td><td>" + result[i]['Developer'] + "</td><td>" + changeBugStatusName(result[i]['Status']) + "</td><td><a href='/testtools/bugdetail/" + result[i]['ID'] + "' target='_blank'>" + "明细" + "</a></td></td></tr>"
                 )
             }
+            changeOnlyColor();
         })
     });
     $("#selectProject").change(function () {
+        // select变动的方法
         var project = $(this).val();
         var data = {
             "Project": project
@@ -125,7 +132,7 @@ function getBugRecordAccordingCondition() {
                     "<tr id='" + i + "'><td>" + result[i]['ID'] + "</td><td>" + result[i]['Terminal'] + "</td><td>" + result[i]['BugTitle'] + "</td><td>" + result[i]['Developer'] + "</td><td>" + changeBugStatusName(result[i]['Status']) + "</td><td><a href='/testtools/bugdetail/" + result[i]['ID'] + "' target='_blank'>" + "明细" + "</a></td></td></tr>"
                 )
             }
-            changeTrColor();
+            changeTrColor(); // 改变颜色要放在请求数据成功后调用
         });
     });
 
@@ -133,6 +140,11 @@ function getBugRecordAccordingCondition() {
 }
 
 function changeTrColor() {
+    /**
+     * 根据缺陷状态改变表格中tr标签的背景颜色
+     * 获取不同缺陷状态的数字
+     */
+    // 缺陷状态的计数器
     var weijiejue = 0;
     var yixiufu = 0;
     var yiyanzheng = 0;
@@ -144,19 +156,19 @@ function changeTrColor() {
         switch (ite) {
             case "未解决":
                 $("#" + index).addClass("danger");
-                weijiejue = weijiejue+1;
+                weijiejue = weijiejue + 1;
                 break;
             case "已修复":
                 $("#" + index).addClass("warning");
-                yixiufu = yixiufu+1;
+                yixiufu = yixiufu + 1;
                 break;
             case "已验证":
                 $("#" + index).addClass("success");
-                yiyanzheng = yiyanzheng+1;
+                yiyanzheng = yiyanzheng + 1;
                 break;
             case "非问题":
                 $("#" + index).addClass("success");
-                feiwenti = feiwenti+1;
+                feiwenti = feiwenti + 1;
                 break;
         }
     });
@@ -166,7 +178,34 @@ function changeTrColor() {
     $("#button4 span").text(feiwenti);
 }
 
+function changeOnlyColor() {
+    $("#bugbody tr").each(function (index, item) {
+        // console.log(index, $(item).children("td:eq(4)").text());
+        // console.log($(item).children("td:eq(4)").text());
+        var ite = $(item).children("td:eq(4)").text();
+        switch (ite) {
+            case "未解决":
+                $("#" + index).addClass("danger");
+                break;
+            case "已修复":
+                $("#" + index).addClass("warning");
+                break;
+            case "已验证":
+                $("#" + index).addClass("success");
+                break;
+            case "非问题":
+                $("#" + index).addClass("success");
+                break;
+        }
+    });
+}
+
 function changeBugStatusName(data) {
+    /**
+     * 缺陷状态码和文案的转换
+     * @param {string} data 缺陷的状态码
+     * @return {string} 缺陷的文案
+     */
     switch (data) {
         case '1':
             return "未解决";
@@ -187,6 +226,11 @@ function changeBugStatusName(data) {
 
 
 function changeDeveloper(data) {
+    /**
+     *开发人员姓名和状态码的转换
+     * @param {string} data 开发人员的姓名
+     * @return {string} 开发人员姓名对应的状态码
+     */
     switch (data) {
         case "徐成勋":
             return "xucx";
@@ -212,6 +256,9 @@ function changeDeveloper(data) {
         case "黄强":
             return "huangq";
             break;
+        case "郑总":
+            return "zhengzong";
+            break;
     }
 }
 
@@ -235,6 +282,9 @@ function changeTerminal(data) {
             break;
         case "HTML5":
             return "html5";
+            break;
+        case "后台":
+            return "houtai";
             break;
     }
 }

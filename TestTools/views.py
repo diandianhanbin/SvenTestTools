@@ -138,6 +138,7 @@ def getAllBug(request):
 			"Project": x['Project']
 		}
 		rst_data.append(bug_data)
+	rst_data = rst_data[::-1]
 	return JsonResponse(rst_data, safe=False)
 
 
@@ -216,4 +217,5 @@ def getBugAccordingToCondition(request):
 			"Project": x['Project']
 		}
 		rst_data.append(bug_data)
+	rst_data = rst_data[::-1]
 	return JsonResponse(rst_data, safe=False)

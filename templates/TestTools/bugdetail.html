@@ -1,6 +1,10 @@
 {% extends "TestTools/base.html" %}
 {% load custom_markdown %}
 {% block body %}
+    <style>
+    img{
+        width:700px;}
+    </style>
     <script src="/static/js/bug.js"></script>
     <body>
     {% if errmsg == "True" %}
