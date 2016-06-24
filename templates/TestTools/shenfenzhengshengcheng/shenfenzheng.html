@@ -1,0 +1,57 @@
+{% extends "TestTools/base.html" %}
+{% block body %}
+    <form class="form-horizontal" method="post" action="{% url 'idcardquery' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="col-sm-2 control-label">生成身份证的数量</label>
+            <div class="col-sm-2">
+                <input class="form-control" placeholder="请输入需要生成的数量" name="num" id="num_input">
+            </div>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-default" id="numButton">生成</button>
+            </div>
+        </div>
+    <div id="flash"></div>
+    </form>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <td>姓名</td>
+            <td>身份证号码</td>
+            <td>生日</td>
+            <td>年龄</td>
+            <td>性别</td>
+            <td>地址</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for foo in iddata %}
+            <tr>
+                <td>{{ foo.name }}</td>
+                <td>{{ foo.id }}</td>
+                <td>{{ foo.birthday }}</td>
+                <td>{{ foo.age }}</td>
+                <td>{{ foo.sex }}</td>
+                <td>{{ foo.address }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <script>
+        $("#numButton").on('click', function (e) {
+            var $inputValue = $("#num_input");
+            if (!/\d/.test($inputValue.val())) {
+                $("#flash").html(
+                        '<div class="alert alert-danger">填写的数据必须为int类型</div>'
+                );
+                e.preventDefault();
+                $inputValue.val("");
+            }else {
+                $("#flash").html(
+                        '<div class="alert alert-success">查询成功</div>'
+                );
+            }
+        })
+    </script>
+{% endblock %}

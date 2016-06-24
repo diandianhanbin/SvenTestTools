@@ -16,5 +16,5 @@ urlpatterns = [
 	url(r'^updatebug/(?P<bugid>[0-9]+)/$', views.updateBugContent, name='updatebug'),
 	url(r'^newproject/', views.newproject, name='newproject'),
 	url(r'^getbugaccordingtocondition/$', views.getBugAccordingToCondition, name='getBugAccordingToCondition'),
-
+	url(r'^idcardquery/', views.idcardquery, name='idcardquery'),
 ]

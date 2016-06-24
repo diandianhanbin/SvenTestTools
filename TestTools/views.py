@@ -7,6 +7,7 @@ from mongodb import config, mongodb
 import time
 from django.http import JsonResponse
 from django.http import HttpResponseRedirect
+import requests
 
 mdb = mongodb.MongoDB()
 
@@ -111,6 +112,20 @@ def newproject(request):
 			return render(request, 'TestTools/newproject.html', {"errmsg": "False"})
 
 	return render(request, 'TestTools/newproject.html', {"errmsg": "None"})
+
+
+def idcardquery(request):
+	if request.method == "POST":
+		url = 'http://identity.daoapp.io/api'
+		payload = {
+			"num": request.POST['num']
+		}
+		r = requests.get(url, params=payload)
+		print r.url
+		jsonData = r.json()
+		print jsonData
+		return render(request, 'TestTools/shenfenzhengshengcheng/shenfenzheng.html', {"iddata": jsonData})
+	return render(request, 'TestTools/shenfenzhengshengcheng/shenfenzheng.html')
 
 
 # =========================================Ajax==================================================
