@@ -8,16 +8,14 @@ import time
 from django.http import JsonResponse
 from django.http import HttpResponseRedirect
 import requests
+from mobile import adb
 
 mdb = mongodb.MongoDB()
 
 
+
 def index(request):
 	return render(request, 'TestTools/index.html')
-
-
-def mobile(request):
-	return render(request, 'TestTools/mobile.html')
 
 
 def bugrecord(request):
@@ -32,9 +30,9 @@ def bugrecord(request):
 		}
 		bugStatus.append(data)
 	bugStatusCount = [mdb.dbQueryCount(config.COLLECTION['bugContent'], **{"bugStatus": "1"}),
-						mdb.dbQueryCount(config.COLLECTION['bugContent'], **{"bugStatus": "2"}),
-						mdb.dbQueryCount(config.COLLECTION['bugContent'], **{"bugStatus": "3"}),
-						mdb.dbQueryCount(config.COLLECTION['bugContent'], **{"bugStatus": "4"})]
+					  mdb.dbQueryCount(config.COLLECTION['bugContent'], **{"bugStatus": "2"}),
+					  mdb.dbQueryCount(config.COLLECTION['bugContent'], **{"bugStatus": "3"}),
+					  mdb.dbQueryCount(config.COLLECTION['bugContent'], **{"bugStatus": "4"})]
 
 	return render(request, 'TestTools/bugrecord.html', {"project": project,
 														"bugStatus": bugStatus,
@@ -43,6 +41,7 @@ def bugrecord(request):
 
 def newbug(request, bugtype, bugid):
 	if bugtype == "new":
+		newid = 0
 		if request.method == 'POST':
 			data = {
 				"Project": request.POST['Project'],
@@ -58,7 +57,8 @@ def newbug(request, bugtype, bugid):
 			}
 			mdb.dbInsertOneRecord(config.COLLECTION['bugContent'], **data)
 			mdb.bugPlus()
-		return render(request, 'TestTools/newbug.html', {"type": "new"})
+			newid = mdb.getBugID()-1
+		return render(request, 'TestTools/newbug.html', {"type": "new", "newid": newid})
 	elif bugtype == "update":
 		return render(request, 'TestTools/newbug.html', {"type": "update", "bugID": bugid})
 	return render(request, 'TestTools/newbug.html')
@@ -126,6 +126,12 @@ def idcardquery(request):
 		print jsonData
 		return render(request, 'TestTools/shenfenzhengshengcheng/shenfenzheng.html', {"iddata": jsonData})
 	return render(request, 'TestTools/shenfenzhengshengcheng/shenfenzheng.html')
+
+
+# =========================================Mobile==================================================
+
+def baseinfo(request):
+	return render(request, 'TestTools/mobileTest/baseinfo.html')
 
 
 # =========================================Ajax==================================================
@@ -233,4 +239,18 @@ def getBugAccordingToCondition(request):
 		}
 		rst_data.append(bug_data)
 	rst_data = rst_data[::-1]
+	return JsonResponse(rst_data, safe=False)
+
+
+def getAndroidInfo(request):
+	BatteryInfo = adb.BatteryInfo().getBatteryInfo()
+	CPUInfo = adb.CpuInfo().getCPUInfo()
+	MemInfo = adb.MemInfo().getMemInfo()
+	BaseInfo = adb.BaseInfo().getBaseInfo()
+	rst_data = {
+		"cpuinfo": CPUInfo,
+		"meminfo": MemInfo,
+		"batteryinfo": BatteryInfo,
+		"baseinfo": BaseInfo,
+	}
 	return JsonResponse(rst_data, safe=False)

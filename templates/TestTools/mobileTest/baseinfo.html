@@ -1,0 +1,24 @@
+{% extends "TestTools/base.html" %}
+{% block body %}
+    <script src="/static/js/androidbaseinfo.js"></script>
+    <body>
+    <div class="panel panel-info">
+        <div class="panel-heading">说明</div>
+        <div class="panel-body">
+            本页面显示Android手机的各项基本信息,请连接手机后点击 ====>
+            <button class="btn btn-default" type="button" id="getinfo">查看信息</button>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2" id="dad1">
+                <div><ul class="list-group" id="index"></ul></div>
+            </div>
+            <div class="col-md-10" id="dad2">
+                <div id="infobody"></div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+{% endblock %}

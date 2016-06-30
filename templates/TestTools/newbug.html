@@ -3,7 +3,11 @@
     <script src="/static/js/bug.js"></script>
     {% if type == "new" %}
         <body onload="getnewbugelements()">
-        <form class="form-horizontal" method="post" action="{% url 'newbug' 'new' 0%}">
+        {% if newid != 0 %}
+            <div class="alert alert-success" role="alert">Bug提交成功,<a href="{% url 'bugdetail' newid %}">点击查看</a></div>
+        {% endif %}
+
+        <form class="form-horizontal" method="post" action="{% url 'newbug' 'new' 0 %}">
             {% csrf_token %}
             <div class="form-group">
                 <label class="col-sm-2 control-label">请选择项目</label>
@@ -68,7 +72,7 @@
         </body>
     {% elif type == "update" %}
         <body onload="~function(){getnewbugelements();getOneBug({{ bugID }})}()">
-        <form class="form-horizontal" method="post" action="{% url 'updatebug' bugID%}">
+        <form class="form-horizontal" method="post" action="{% url 'updatebug' bugID %}">
             {% csrf_token %}
             <div class="form-group">
                 <label class="col-sm-2 control-label">请选择项目</label>
@@ -100,7 +104,8 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">请输入重现步骤</label>
                 <div class="col-sm-8">
-                    <textarea class="form-control" rows="6" placeholder="请输入重现步骤(markdown)" name="bugStep" id="bugStep"></textarea>
+                    <textarea class="form-control" rows="6" placeholder="请输入重现步骤(markdown)" name="bugStep"
+                              id="bugStep"></textarea>
                 </div>
             </div>
             <div class="form-group">

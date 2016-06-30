@@ -2,8 +2,9 @@
 {% load custom_markdown %}
 {% block body %}
     <style>
-    img{
-        width:700px;}
+        img {
+            width: 500px;
+        }
     </style>
     <script src="/static/js/bug.js"></script>
     <body>
@@ -61,8 +62,7 @@
         </a>
     {% elif errmsg == "False" %}
         <script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8"
-                homePageUrl="http://yoursite.com/yourPage.html" homePageName="回到我的主页"></script>
+                homePageUrl="http://localhost:2222/testtools/" homePageName="回到我的主页"></script>
     {% endif %}
-
     </body>
 {% endblock %}

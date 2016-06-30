@@ -19,7 +19,18 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="#">Web端测试</a></li>
-                    <li><a href="{% url 'mobile' %}">移动端测试</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">移动端测试 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'mobilebaseinfo' %}">Android——基本信息</a></li>
+                            <li><a href="#">Android——内存监控</a></li>
+                            <li><a href="#">Android——CPU监控</a></li>
+                            <li><a href="#">Android——流量监控</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">IOS</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#">接口测试</a></li>
                     <li><a href="#">抓包测试</a></li>
                     <li><a href="{% url 'bugrecord' %}">缺陷记录</a></li>
@@ -33,4 +44,19 @@
 
 {% endblock %}
 </body>
+<script>
+    $(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() != 0) {
+                $("#toTop").fadeIn();
+            } else {
+                $("#toTop").fadeOut();
+            }
+        });
+        $("body").append("<div id=\"toTop\" style=\"border:1px solid #444;background:#333;color:#fff;text-align:center;padding:10px 13px 7px 13px;position:fixed;bottom:10px;right:10px;cursor:pointer;display:none;font-family:verdana;font-size:22px;\">^</div>");
+        $("#toTop").click(function () {
+            $("body,html").animate({scrollTop: 0}, 800);
+        });
+    })
+</script>
 </html>

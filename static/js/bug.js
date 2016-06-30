@@ -1,9 +1,9 @@
 /**
  * Created by SvenWeng on 16/6/15.
  */
-$(document).ready(function () {
-
-});
+$(document).ready(
+    
+);
 
 function getallbug() {
     /**
