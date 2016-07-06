@@ -13,7 +13,6 @@ from mobile import adb
 mdb = mongodb.MongoDB()
 
 
-
 def index(request):
 	return render(request, 'TestTools/index.html')
 
@@ -132,6 +131,10 @@ def idcardquery(request):
 
 def baseinfo(request):
 	return render(request, 'TestTools/mobileTest/baseinfo.html')
+
+
+def commonfunction(request):
+	return render(request, 'TestTools/mobileTest/commonfunction.html')
 
 
 # =========================================Ajax==================================================
@@ -254,3 +257,10 @@ def getAndroidInfo(request):
 		"baseinfo": BaseInfo,
 	}
 	return JsonResponse(rst_data, safe=False)
+
+
+def apkInstall(request):
+	iscovered = request.GET.get('iscovered')
+	apkaddress = request.GET.get('apkaddress')
+	Install = adb.CommonFunction().install(iscovered, apkaddress)
+	return JsonResponse(Install)

@@ -1,0 +1,32 @@
+{% extends "TestTools/base.html" %}
+{% block body %}
+    <body>
+    <script src="/static/js/commonfunction.js"></script>
+    <div id="flash">
+
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">APK安装</div>
+        <div class="panel-body">
+            <strong>注意:若手机中已存在所安装的APP,请勾选覆盖安装</strong>
+            <p></p>
+            <form class="form-inline">
+                <div class="form-group">
+                    <input class="form-control" placeholder="请输入安装包的地址" style="width: 400px;" id="apkaddress">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="iscovered" name="iscovered" value="true"> 覆盖安装
+                    </label>
+                </div>
+                <button type="button" class="btn btn-default" id="install">安装</button>
+            </form>
+            <p></p>
+            <div id="jindutiao">
+                
+            </div>
+
+        </div>
+    </div>
+    </body>
+{% endblock %}

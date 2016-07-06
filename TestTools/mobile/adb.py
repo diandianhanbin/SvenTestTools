@@ -86,6 +86,38 @@ class BaseInfo(Adb):
 		]
 		return data
 
+
+class CommonFunction(Adb):
+	def __init__(self):
+		Adb.__init__(self)
+		self.installCommand = adbconfig.COMMAND['install']
+
+	def install(self, iscovered, apkaddress):
+		rst_data = {}
+		if iscovered == u"true":
+			command = adbconfig.COMMAND['install']+"-r "+apkaddress
+			os.system(command.encode('utf-8'))
+			rst_data['msg'] = "安装完毕"
+			rst_data['status'] = "OK"
+
+		elif iscovered == u"false":
+			command = adbconfig.COMMAND['install'] + apkaddress
+			status = self.anafile(os.popen(command.encode('utf-8')))
+			for x in status:
+				if "Failure" in x:
+					rst_data['msg'] = "安装失败,手机中已存在该APP,请使用覆盖安装"
+					rst_data['status'] = "ERROR"
+					return rst_data
+			rst_data['msg'] = "安装完毕"
+			rst_data['status'] = "OK"
+
+		else:
+			rst_data['msg'] = "未知错误,安装失败"
+			rst_data['status'] = "ERROR"
+
+		return rst_data
+
+
 if __name__ == '__main__':
 	# ad = Adb()
 	# print ad.checkConnect()

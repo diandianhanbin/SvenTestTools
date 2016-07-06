@@ -13,4 +13,5 @@ COMMAND = {
 	"mobiledilplay": "adb shell dumpsys display | grep DisplayDeviceInfo",
 	"mobileversion": "adb shell getprop ro.build.version.release",
 	"mobileimme": "adb shell dumpsys iphonesubinfo | grep Device",
+	"install": "adb install ",
 }

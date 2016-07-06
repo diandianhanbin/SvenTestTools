@@ -14,6 +14,7 @@ urlpatterns = [
 	url(r'^idcardquery/', views.idcardquery, name='idcardquery'),
 	# =============mobile====================
 	url(r'^mobilebaseinfo/', views.baseinfo, name='mobilebaseinfo'),
+	url(r'^commonfunction/', views.commonfunction, name='commonfunction'),
 
 	# =============Ajax======================
 	url(r'^getbugaccordingtocondition/$', views.getBugAccordingToCondition, name='getBugAccordingToCondition'),
@@ -21,4 +22,5 @@ urlpatterns = [
 	url(r'^getallbug/', views.getAllBug, name='getallbug'),
 	url(r'^getnewbugelements/', views.getNewBugElements, name='getnewbugelements'),
 	url(r'^getandroidbaseinfo/$', views.getAndroidInfo, name='getAndroidInfo'),
+	url(r'^apkinstall/$', views.apkInstall, name='apkinstall'),
 ]
