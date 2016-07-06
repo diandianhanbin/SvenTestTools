@@ -6,8 +6,8 @@
     <div class="container">
         <div class="row">
             <div class="form-group">
-                <div class="col-md-2"><label>请选择项目</label></div>
-                <div class="col-md-8">
+                <div class="col-md-2 text-center"><label>请选择项目</label></div>
+                <div class="col-md-6">
                     <select class="form-control" id="selectProject">
                         {% for x in project %}
                             <option>{{ x }}</option>
@@ -22,6 +22,16 @@
                 <a href="{% url 'newproject' %}">
                     <div class="col-md-1">
                         <button type="button" class="btn btn-default">新建项目</button>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-default">Export Bug</button>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-default">Export All Bug</button>
                     </div>
                 </a>
             </div>
@@ -57,15 +67,3 @@
     </div>
     </body>
 {% endblock %}
-<!--
-<script>
-
-    $.getJSON('/testtools/getallbug/', function (data) {
-        for (var i = 0; i < data.length; i++) {
-            $("#bugbody").append(
-                    "<tr><td>" + data[i]['ID'] + "</td><td>" + data[i]['Terminal'] + "</td><td>" + data[i]['BugTitle'] + "</td><td>" + data[i]['Developer'] + "</td><td>" + changeBugStatusName(data[i]['Status']) + "</td><td>" + "明细" + "</td></td></tr>"
-            )
-        }
-    });
-</script>
--->
