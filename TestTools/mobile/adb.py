@@ -9,15 +9,88 @@ import adbconfig
 class Adb(object):
 	def __init__(self):
 		self.checkconnect = adbconfig.COMMAND['checkConnect']
+		self.thirdpackage = adbconfig.COMMAND['thirdpackage']
+		self.curpknm = adbconfig.COMMAND['getcurpknm']
 
 	def checkConnect(self):
+		"""
+		检查设备的连接状态
+		:return: True or False
+		"""
 		deviceList = self.anafile(os.popen(self.checkconnect))
 		status = True if len(deviceList) > 2 else False
 		return status
 
 	def anafile(self, fileobj):
+		"""
+		返回对象所有的列,以列表形式返回
+		:param fileobj:对象
+		:return:List, 去空格的列表
+		"""
 		data = [x.strip() for x in fileobj]
 		return data
+
+	def getDevicesName(self):
+		"""
+		获取设备名称
+		:return:设备名称
+		"""
+		data = {}
+		a = os.popen('adb devices')
+		devices = a.readlines()
+		spl = devices[1].find('	')
+		devices_name = devices[1][:spl]
+		if devices_name == '':
+			data['status'] = "ERROR"
+			data['msg'] = "请确认设备是否连接"
+			return data
+		else:
+			data['status'] = "OK"
+			data['msg'] = devices_name
+			return data
+
+	def getThirdPackage(self):
+		"""
+		获取手机中的第三方应用名称
+		:return:
+		"""
+		if not self.checkConnect():
+			pk_data = {
+				"status": "ERROR",
+				"msg": "请检查设备是否正确连接"
+			}
+			return pk_data
+		f = self.anafile(os.popen(self.thirdpackage))
+		thirdNames = [x.strip().split(":")[1] for x in f]
+		data = {
+			"status": "OK",
+			"msg": "查询成功",
+			"thirdNames": thirdNames
+		}
+		return data
+
+	def getCurPknm(self):
+		"""
+		获取手机当前运行的程序包名和Activity名
+		:return:包名和Activity名
+		"""
+		if not self.checkConnect():
+			pk_data = {
+				"status": "ERROR",
+				"msg": "请检查设备是否正确连接"
+			}
+			return pk_data
+		f = self.anafile(os.popen(self.curpknm))
+		pknm = [x.strip().split(" ")[4] for x in f]
+
+		pk_info = pknm[0].split('/')
+		pk_data = {
+			'msg': '查询成功',
+			'status': "OK",
+			'package_name': pk_info[0],
+			'activity_name': pk_info[1].rstrip("}")
+		}
+		return pk_data
 
 
 class BatteryInfo(Adb):
@@ -26,7 +99,6 @@ class BatteryInfo(Adb):
 		self.getbatteryinfo = adbconfig.COMMAND['getBattery']
 
 	def getBatteryInfo(self):
-		data = []
 		Batteryinfo = self.anafile(os.popen(self.getbatteryinfo))
 		data = [
 			'电源供电(AC powered): {}'.format(Batteryinfo[1].split(":")[1]),
@@ -125,7 +197,8 @@ class CommonFunction(Adb):
 
 if __name__ == '__main__':
 	ad = Adb()
-	print ad.checkConnect()
+	# print ad.checkConnect()
+	print ad.getThirdPackage()
 	# bat = BatteryInfo()
 	# print bat.getBatteryInfo()
 	# cpu = CpuInfo()

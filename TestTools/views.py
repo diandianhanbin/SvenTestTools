@@ -263,4 +263,14 @@ def apkInstall(request):
 	iscovered = request.GET.get('iscovered')
 	apkaddress = request.GET.get('apkaddress')
 	Install = adb.CommonFunction().install(iscovered, apkaddress)
-	return JsonResponse(Install)
+	return JsonResponse(Install, False)
+
+
+def getCurPknm(request):
+	data = adb.Adb().getCurPknm()
+	return JsonResponse(data, safe=False)
+
+
+def getThirdPknm(request):
+	data = adb.Adb().getThirdPackage()
+	return JsonResponse(data, safe=False)

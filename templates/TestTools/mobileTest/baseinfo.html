@@ -1,18 +1,91 @@
 {% extends "TestTools/base.html" %}
 {% block body %}
     <script src="/static/js/androidbaseinfo.js"></script>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .mvBox {
+            height: 15px;
+            background: #F5FAFD url(/static/img/test2.jpg) no-repeat left center;
+            width: 471px;
+            position: relative;
+            padding: 0 30px;
+            margin: 0 auto;
+        }
+
+        .mvBtn {
+            position: absolute;
+            left: 50px;
+            top: 0;
+        }
+
+        .mvTxt {
+            height: 50px;
+            line-height: 50px;
+            width: 531px;
+            text-align: center;
+            font-size: 30px;
+            color: #29B6FF;
+            font-family: Arial;
+            margin: 0 auto;
+        }
+    </style>
+    <script language="javascript">
+        var delVal = 50;
+        function autoMove() {
+            delVal++;
+            if (delVal > 400) {
+                delVal = 50;
+            }
+            $(".mvBtn").css("left", delVal);
+        }
+        setInterval(autoMove, 8);
+        var deNum = 0;
+        function autoTsq() {
+            $(".mvSq").css("color", "#F5FAFD");
+            setTimeout(function () {
+                $(".mvSq").eq(0).css("color", "#29B6FF")
+            }, 0);
+            setTimeout(function () {
+                $(".mvSq").eq(1).css("color", "#29B6FF")
+            }, 500);
+            setTimeout(function () {
+                $(".mvSq").eq(2).css("color", "#29B6FF")
+            }, 1000);
+        }
+        setInterval(autoTsq, 1500);
+    </script>
     <body>
+    <div id="texiao" hidden>
+        <div class="mvTxt">Loading<span class="mvSq">.</span><span class="mvSq">.</span><span class="mvSq">.</span>
+        </div>
+        <div class="mvBox">
+            <img class="mvBtn" src="/static/img/test1.jpg"/>
+        </div>
+    </div>
     <div class="panel panel-info">
         <div class="panel-heading">说明</div>
         <div class="panel-body">
             本页面显示Android手机的各项基本信息,请连接手机后点击 ====>
             <button class="btn btn-default" type="button" id="getinfo">查看信息</button>
+            <br><br>
+            查看当前运行程序的包名和Activity名,请连接手机后点击 ====>
+            <button class="btn btn-default" type="button" id="getcurpknm">查看信息</button>
+            <br><br>
+            查看手机中所有的第三方包的包名,请连接手机后点击 ====>
+            <button class="btn btn-default" type="button" id="getthirdpknm">查看信息</button>
+            <br>
         </div>
     </div>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row" id="content">
             <div class="col-md-2" id="dad1">
-                <div><ul class="list-group" id="index"></ul></div>
+                <div>
+                    <ul class="list-group" id="index"></ul>
+                </div>
             </div>
             <div class="col-md-10" id="dad2">
                 <div id="infobody"></div>

@@ -23,4 +23,6 @@ urlpatterns = [
 	url(r'^getnewbugelements/', views.getNewBugElements, name='getnewbugelements'),
 	url(r'^getandroidbaseinfo/$', views.getAndroidInfo, name='getAndroidInfo'),
 	url(r'^apkinstall/$', views.apkInstall, name='apkinstall'),
+	url(r'^getcurpknm/$', views.getCurPknm, name='getCurPknm'),
+	url(r'^getthirdpknm/$', views.getThirdPknm, name='getThirdPknm'),
 ]

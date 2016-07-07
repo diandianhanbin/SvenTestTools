@@ -37,12 +37,3 @@ $(document).ready(
 );
 
 
-function changeJinDuTiao() {
-    var i=0;
-    for (var t=0;t<4;t++){
-        if (i = 4){
-            break;
-        }
-        setInterval()
-    }
-}

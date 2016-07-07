@@ -14,4 +14,6 @@ COMMAND = {
 	"mobileversion": "adb shell getprop ro.build.version.release",
 	"mobileimme": "adb shell dumpsys iphonesubinfo | grep Device",
 	"install": "adb install ",
+	"thirdpackage": "adb shell pm list package -3",
+	"getcurpknm": "adb shell dumpsys window windows | grep mFocusedApp",
 }

@@ -2,7 +2,6 @@
  * Created by SvenWeng on 16/6/15.
  */
 $(document).ready(
-    
 );
 
 function getallbug() {
@@ -288,3 +287,5 @@ function changeTerminal(data) {
             break;
     }
 }
+
+
