@@ -94,6 +94,11 @@ class CommonFunction(Adb):
 
 	def install(self, iscovered, apkaddress):
 		rst_data = {}
+		if not self.checkConnect():
+			rst_data['msg'] = "未检测到设备,请检查设备是否正确连接"
+			rst_data['status'] = "ERROR"
+			return rst_data
+
 		if iscovered == u"true":
 			command = adbconfig.COMMAND['install']+"-r "+apkaddress
 			os.system(command.encode('utf-8'))
@@ -119,13 +124,13 @@ class CommonFunction(Adb):
 
 
 if __name__ == '__main__':
-	# ad = Adb()
-	# print ad.checkConnect()
+	ad = Adb()
+	print ad.checkConnect()
 	# bat = BatteryInfo()
 	# print bat.getBatteryInfo()
 	# cpu = CpuInfo()
 	# print cpu.getCPUInfo()
 	# mem = MemInfo()
 	# mem.getMemInfo()
-	baseinfo = BaseInfo()
-	baseinfo.getBaseInfo()
+	# baseinfo = BaseInfo()
+	# baseinfo.getBaseInfo()
