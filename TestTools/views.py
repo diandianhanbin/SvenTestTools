@@ -6,7 +6,6 @@ from django.shortcuts import render
 from mongodb import config, mongodb
 import time
 from django.http import JsonResponse
-from django.http import HttpResponseRedirect
 import requests
 from mobile import adb
 
@@ -137,6 +136,10 @@ def commonfunction(request):
 	return render(request, 'TestTools/mobileTest/commonfunction.html')
 
 
+def checkinfo(request):
+	return render(request, 'TestTools/mobileTest/checkinfo.html')
+
+
 # =========================================Ajax==================================================
 # =========================================Ajax==================================================
 
@@ -262,8 +265,8 @@ def getAndroidInfo(request):
 def apkInstall(request):
 	iscovered = request.GET.get('iscovered')
 	apkaddress = request.GET.get('apkaddress')
-	Install = adb.CommonFunction().install(iscovered, apkaddress)
-	return JsonResponse(Install, False)
+	data = adb.CommonFunction().install(iscovered, apkaddress)
+	return JsonResponse(data, safe=False)
 
 
 def getCurPknm(request):
@@ -274,3 +277,7 @@ def getCurPknm(request):
 def getThirdPknm(request):
 	data = adb.Adb().getThirdPackage()
 	return JsonResponse(data, safe=False)
+
+
+def checkAndroidInfo(request):
+	pass

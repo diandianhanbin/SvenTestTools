@@ -1,10 +1,73 @@
 {% extends "TestTools/base.html" %}
 {% block body %}
+    <script src="/static/js/androidbaseinfo.js"></script>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .mvBox {
+            height: 15px;
+            background: #F5FAFD url(/static/img/test2.jpg) no-repeat left center;
+            width: 471px;
+            position: relative;
+            padding: 0 30px;
+            margin: 0 auto;
+        }
+
+        .mvBtn {
+            position: absolute;
+            left: 50px;
+            top: 0;
+        }
+
+        .mvTxt {
+            height: 50px;
+            line-height: 50px;
+            width: 531px;
+            text-align: center;
+            font-size: 30px;
+            color: #29B6FF;
+            font-family: Arial;
+            margin: 0 auto;
+        }
+    </style>
+    <script language="javascript">
+        var delVal = 50;
+        function autoMove() {
+            delVal++;
+            if (delVal > 400) {
+                delVal = 50;
+            }
+            $(".mvBtn").css("left", delVal);
+        }
+        setInterval(autoMove, 8);
+        var deNum = 0;
+        function autoTsq() {
+            $(".mvSq").css("color", "#F5FAFD");
+            setTimeout(function () {
+                $(".mvSq").eq(0).css("color", "#29B6FF")
+            }, 0);
+            setTimeout(function () {
+                $(".mvSq").eq(1).css("color", "#29B6FF")
+            }, 500);
+            setTimeout(function () {
+                $(".mvSq").eq(2).css("color", "#29B6FF")
+            }, 1000);
+        }
+        setInterval(autoTsq, 1500);
+    </script>
     <body>
     <script src="/static/js/commonfunction.js"></script>
-    <div id="flash">
-
+    <div id="texiao" hidden>
+        <div class="mvTxt">Loading<span class="mvSq">.</span><span class="mvSq">.</span><span class="mvSq">.</span>
+        </div>
+        <div class="mvBox">
+            <img class="mvBtn" src="/static/img/test1.jpg"/>
+        </div>
     </div>
+    <div id="flash"></div>
     <div class="panel panel-default">
         <div class="panel-heading">APK安装</div>
         <div class="panel-body">
@@ -23,7 +86,7 @@
             </form>
             <p></p>
             <div id="jindutiao">
-                
+
             </div>
 
         </div>

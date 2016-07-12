@@ -1,0 +1,43 @@
+{% extends "TestTools/base.html" %}
+{% block body %}
+    <script src="/static/js/checkinfo.js"></script>
+    <body>
+    <div class="container">
+        <div class="panel panel-info">
+            <div class="panel-heading">说明</div>
+            <div class="panel-body">
+                请选择需要监控的项目打钩<br>
+                <strong>注意:监控流量时最好打开再关闭飞行模式</strong>
+                <form class="form-horizontal">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="cpu" checked>
+                            CPU监控
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="mem" checked>
+                            内存监控
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="flow" checked>
+                            流量监控
+                        </label>
+                    </div>
+                    <p></p>
+                    <button type="button" class="btn btn-default" id="btncheck">开始监控</button>
+                </form>
+            </div>
+        </div>
+        <!-- ===========容器========== -->
+        <div class="row">
+            <div class="col-md-4" id="cpu"></div>
+            <div class="col-md-4" id="mem"></div>
+            <div class="col-md-4" id="flow"></div>
+        </div>
+    </div>
+    </body>
+{% endblock %}

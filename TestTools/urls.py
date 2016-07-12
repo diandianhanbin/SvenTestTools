@@ -15,6 +15,7 @@ urlpatterns = [
 	# =============mobile====================
 	url(r'^mobilebaseinfo/', views.baseinfo, name='mobilebaseinfo'),
 	url(r'^commonfunction/', views.commonfunction, name='commonfunction'),
+	url(r'^checkinfo/', views.checkinfo, name='checkinfo'),
 
 	# =============Ajax======================
 	url(r'^getbugaccordingtocondition/$', views.getBugAccordingToCondition, name='getBugAccordingToCondition'),
