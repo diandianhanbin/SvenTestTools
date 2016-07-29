@@ -17,6 +17,9 @@ urlpatterns = [
 	url(r'^commonfunction/', views.commonfunction, name='commonfunction'),
 	url(r'^checkinfo/', views.checkinfo, name='checkinfo'),
 
+	# =============kxiantu===================
+	url(r'^kxiantu/', views.kxiantu, name='kxiantu'),
+
 	# =============Ajax======================
 	url(r'^getbugaccordingtocondition/$', views.getBugAccordingToCondition, name='getBugAccordingToCondition'),
 	url(r'^getonebug/(?P<bugid>[0-9]+)/$', views.getOneBugElement, name='getonebug'),
@@ -26,4 +29,6 @@ urlpatterns = [
 	url(r'^apkinstall/$', views.apkInstall, name='apkinstall'),
 	url(r'^getcurpknm/$', views.getCurPknm, name='getCurPknm'),
 	url(r'^getthirdpknm/$', views.getThirdPknm, name='getThirdPknm'),
+	url(r'^exportbug/$', views.exportBug, name='exportBug'),
+	url(r'^getcharts/$', views.getCharts, name='getcharts'),
 ]

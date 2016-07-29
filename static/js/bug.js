@@ -1,8 +1,10 @@
 /**
  * Created by SvenWeng on 16/6/15.
  */
-$(document).ready(
-);
+$(document).ready(function () {
+    DOExportBug();
+    charts();
+});
 
 function getallbug() {
     /**
@@ -198,6 +200,38 @@ function changeOnlyColor() {
         }
     });
 }
+
+function DOExportBug() {
+    $("#DoExport").on('click', function () {
+        var exporttype = $('input:radio[name=exportbug]:checked').val();
+        bugids = [];
+        $("#bugbody tr").each(function (index, item) {
+            var ite = $(item).children("td:eq(0)").text();
+            bugids.push(ite)
+        });
+        sendData = {
+            "exporttype": exporttype,
+            "bugids": bugids
+        };
+        console.log(sendData);
+        $.get('/testtools/exportbug/', sendData, function (rstData) {
+            console.log(rstData)
+        })
+    })
+}
+
+function charts() {
+    $("#charts").on('click', function () {
+        var project = $("#selectProject").val();
+        sendData = {
+            "project": project
+        };
+        $.get('/testtools/getcharts/', sendData, function (rstData) {
+            console.log(rstData)
+        })
+    })
+}
+
 
 function changeBugStatusName(data) {
     /**

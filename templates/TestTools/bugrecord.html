@@ -7,7 +7,7 @@
         <div class="row">
             <div class="form-group">
                 <div class="col-md-2 text-center"><label>请选择项目</label></div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <select class="form-control" id="selectProject">
                         {% for x in project %}
                             <option>{{ x }}</option>
@@ -24,16 +24,53 @@
                         <button type="button" class="btn btn-default">新建项目</button>
                     </div>
                 </a>
-                <a href="#">
-                    <div class="col-md-1">
-                        <button type="button" class="btn btn-default">Export Bug</button>
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="col-md-1">
-                        <button type="button" class="btn btn-default">Export All Bug</button>
-                    </div>
-                </a>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#Export">Export Bug
+                    </button>
+                </div>
+                <!-- 导出弹出框-->
+                <div class="modal fade" id="Export" tabindex="-1" role="dialog"
+                     aria-labelledby="ExportBug" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close"
+                                        data-dismiss="modal" aria-hidden="true">
+                                    &times;
+                                </button>
+                                <h4 class="modal-title" id="ExportBug">
+                                    请选择Bug导出的类型:
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <label class="checkbox-inline">
+                                    <input type="radio" name="exportbug" value="Excle" checked> Excel
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="radio" name="exportbug" value="CSV"> CSV
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="radio" name="exportbug" value="TXT"> TXT
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="radio" name="exportbug" value="JSON"> JSON
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="radio" name="exportbug" value="HTML"> HTML
+                                </label>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <button type="button" id="DoExport" class="btn btn-primary" data-dismiss="modal">
+                                    确定
+                                </button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                </div>
+                <!--     导出弹出框结束    -->
             </div>
         </div>
         <P></P>
@@ -44,6 +81,7 @@
                                                                                     id="status{{ x.code }}"></span>
                     </button>
                 {% endfor %}
+                <button type="botton" class="btn btn-primary" id="charts">查看趋势图</button>
             </div>
         </div>
 

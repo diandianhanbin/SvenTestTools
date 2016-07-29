@@ -281,3 +281,43 @@ def getThirdPknm(request):
 
 def checkAndroidInfo(request):
 	pass
+
+
+def exportBug(request):
+	exporttype = request.GET.get("exporttype")
+	bugids = request.GET.getlist("bugids[]")
+	print exporttype, type(exporttype)
+	print bugids, type(bugids)
+
+
+def kxiantu(request):
+	return render(request, 'TestTools/kxiantu.html')
+
+
+def getCharts(request):
+	weijiejue = 0
+	yixiufu = 0
+	yiyanzheng = 0
+	feiwenti = 0
+	Project = request.GET.get('project')
+	queryData = {"Project": Project}
+	bugRecord = mdb.dbQueryCondition(config.COLLECTION['bugContent'], **queryData)
+	for x in bugRecord:
+		if x['bugStatus'] == '1':
+			weijiejue += 1
+		elif x['bugStatus'] == '2':
+			yixiufu += 1
+		elif x['bugStatus'] == '3':
+			yiyanzheng += 1
+		elif x['bugStatus'] == '4':
+			feiwenti += 1
+
+	rstData = {
+		'bugNum': {
+			"未解决": weijiejue,
+			"已修复": yixiufu,
+			"已验证": yiyanzheng,
+			"非问题": feiwenti
+		}
+	}
+	return JsonResponse(rstData, safe=False)
