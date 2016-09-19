@@ -3,7 +3,7 @@
 # Email : diandianhanbin@gmail.com
 
 from django.shortcuts import render
-from mongodb import config, mongodb
+from MongoDB import config, mongodb
 import time
 from django.http import JsonResponse
 import requests
@@ -286,8 +286,12 @@ def checkAndroidInfo(request):
 def exportBug(request):
 	exporttype = request.GET.get("exporttype")
 	bugids = request.GET.getlist("bugids[]")
-	print exporttype, type(exporttype)
-	print bugids, type(bugids)
+	# print exporttype, type(exporttype)
+	# print bugids, type(bugids)
+	rst_data = {
+		"exportType": str(exporttype),
+	}
+	return JsonResponse(rst_data, safe=False)
 
 
 def kxiantu(request):

@@ -228,7 +228,9 @@ function charts() {
         };
         $.get('/testtools/getcharts/', sendData, function (rstData) {
             console.log(rstData)
-        })
+        });
+        $("#body").html("")
+
     })
 }
 
