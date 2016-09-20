@@ -3,7 +3,7 @@
 # Email : diandianhanbin@gmail.com
 
 from django.shortcuts import render
-from MongoDB import config, mongodb
+from MongoDB import config, mongodb, export
 import time
 from django.http import JsonResponse
 import requests
@@ -288,8 +288,12 @@ def exportBug(request):
 	bugids = request.GET.getlist("bugids[]")
 	# print exporttype, type(exporttype)
 	# print bugids, type(bugids)
+	ep = export.Export()
+	ep.exportExcel(bugids)
+
 	rst_data = {
 		"exportType": str(exporttype),
+
 	}
 	return JsonResponse(rst_data, safe=False)
 

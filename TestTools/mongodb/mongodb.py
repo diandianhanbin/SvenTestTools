@@ -3,23 +3,7 @@
 # Email : diandianhanbin@gmail.com
 import pymongo
 import config
-import json
-from bson.json_util import dumps
-
 post = {"bugStatus": "1"}
-# newpost = "{'Project': u'\u5fae\u8bc1\u5238APP', 'Terminal': u'web', 'bugStatus': u'1', 'Tester': u'wengyb', 'bugDescription': u'testsdgsdgsdgsdfgsdfgsdfg', 'Developer': u'xucx', 'bugTitle': u'testsdgsdgsdg', 'bugStep': u'testsdgsdgsg'}"
-# post = {
-# 	"bugID": 2,
-# 	"Terminal": "IOS",
-# 	"bugTitle": "不会在通知栏提醒消息、在我的消息中也没有记录",
-# 	"bugDescription": "缺陷描述",
-# 	"bugStep": "1、搜索一直未在自选列表的股票.2、做下角不应该显示为“更多”而是添加自选",
-# 	"Developer": "李小斌",
-# 	"Tester": "翁彦彬",
-# 	"Date": "20160613",
-# 	"Status": "1",
-# 	"Project": "微证券APP"
-# }
 
 
 class MongoDB(object):
