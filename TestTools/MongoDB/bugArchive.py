@@ -17,7 +17,7 @@ def getProjectName():
 	return projects
 
 
-def getBugStatus(projectName):
+def getBugStatus(projectName, archiveTime=time.strftime('%Y%m%d')):
 	"""
 	根据项目名称按照日期归档bug数量
 	:param projectName: str, 项目名称
@@ -37,7 +37,7 @@ def getBugStatus(projectName):
 			yixiufu += 1
 		elif x['bugStatus'] == '4':
 			feiwenti += 1
-	Date = time.strftime('%Y%m%d')
+	Date = archiveTime
 	archiveDate = {
 		'weijiejue': weijiejue,
 		'yixiufu': yixiufu,
@@ -46,33 +46,37 @@ def getBugStatus(projectName):
 		'date': Date,
 		'project': projectName
 	}
-	mdb.dbInsertOneRecord('bugArchive', **archiveDate)
+	if archiveDate['weijiejue'] != 0:
+		mdb.dbInsertOneRecord('bugArchive', **archiveDate)
+		print '{}项目归档完毕'.format(archiveDate['project'])
+	else:
+		print '{}项目未解决问题为0,不执行归档'.format(archiveDate['project'])
 
 
-def checkDateIsExist():
+def checkDateIsExist(archiveTime=time.strftime('%Y%m%d')):
 	"""
 	检查当天是否有归档数据
 	:return:Boolen,True表示当天无归档数据,False表示当天有归档数据
 	"""
-	status = mdb.dbQueryCount('bugArchive', **{'date': time.strftime('%Y%m%d')})
+	status = mdb.dbQueryCount('bugArchive', **{'date': archiveTime})
 	if status == 0:
 		return True
 	else:
 		return False
 
 
-def runArchive():
+def runArchive(archiveTime=time.strftime('%Y%m%d')):
 	"""
 	执行归档
 	:return:None
 	"""
-	if checkDateIsExist():
+	if checkDateIsExist(archiveTime):
 		for x in getProjectName():
 			try:
 				getBugStatus(x)
 			except Exception as e:
 				print e
-		print "{}数据归档完毕".format(time.strftime('%Y%m%d'))
+		print "{}数据归档完毕".format(archiveTime)
 	else:
 		print '当天数据已归档'
 
@@ -81,6 +85,13 @@ if __name__ == '__main__':
 	# getProjectName()
 	# getBugStatus('股市直播')
 	# checkDateIsExist()
+	# while 1:
+	# 	runArchive()
+	# 	time.sleep(3600)
+	# runArchive()
 	while 1:
-		runArchive()
+		if time.strftime('%H') == "17":
+			runArchive()
+		else:
+			print '时间未到,不执行归档操作'
 		time.sleep(3600)
