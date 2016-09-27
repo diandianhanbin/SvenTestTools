@@ -214,8 +214,16 @@ function DOExportBug() {
             "bugids": bugids
         };
         console.log(sendData);
+
         $.get('/testtools/exportbug/', sendData, function (rstData) {
-            console.log(rstData)
+            console.log(rstData);
+            if (rstData['errstatus'] == 'ERROR'){
+                alert(rstData['errmsg'])
+            }else if (rstData['errstatus'] == 'OK'){
+                // window.open('缺陷导出表.xls')
+                alert(rstData['errmsg']);
+                $.get('/testtools/downloadbugs/')
+            }
         })
     })
 }

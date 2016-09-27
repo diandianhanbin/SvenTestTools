@@ -7,6 +7,7 @@ CONNECT = {
 
 DB = {
 	"datebase": "mytesttools",
+	"bugArchive": "bugArchive",
 }
 
 COLLECTION = {

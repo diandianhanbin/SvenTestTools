@@ -8,6 +8,7 @@ import time
 from django.http import JsonResponse
 import requests
 from mobile import adb
+from django.http import StreamingHttpResponse
 
 mdb = mongodb.MongoDB()
 
@@ -286,16 +287,36 @@ def checkAndroidInfo(request):
 def exportBug(request):
 	exporttype = request.GET.get("exporttype")
 	bugids = request.GET.getlist("bugids[]")
-	# print exporttype, type(exporttype)
-	# print bugids, type(bugids)
 	ep = export.Export()
-	ep.exportExcel(bugids)
-
+	if exporttype == 'Excel':
+		try:
+			ep.exportExcel(bugids)
+			errstatus = 'OK'
+			errmsg = '导出成功'
+		except Exception as e:
+			errstatus = 'ERROR'
+			errmsg = e
+	elif exporttype == "HTML":
+		try:
+			ep.exportHTML(bugids)
+			errstatus = 'OK'
+			errmsg = '导出成功'
+		except Exception as e:
+			errstatus = 'ERROR'
+			errmsg = e
+	else:
+		errstatus = 'ERROR'
+		errmsg = '传入的导出方式不正确'
 	rst_data = {
 		"exportType": str(exporttype),
-
+		"errstatus": errstatus,
+		"errmsg": errmsg
 	}
 	return JsonResponse(rst_data, safe=False)
+
+
+def downloadBug(request):
+	pass
 
 
 def kxiantu(request):

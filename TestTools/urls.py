@@ -31,4 +31,5 @@ urlpatterns = [
 	url(r'^getthirdpknm/$', views.getThirdPknm, name='getThirdPknm'),
 	url(r'^exportbug/$', views.exportBug, name='exportBug'),
 	url(r'^getcharts/$', views.getCharts, name='getcharts'),
+	url(r'^downloadbugs/$', views.downloadBug, name='downloadbugs'),
 ]

@@ -8,7 +8,29 @@ class Common(object):
 		pass
 
 	def changeDevelopName(self, name):
-		pass
+		if name == 'ruanrj':
+			return '阮荣军'
+		elif name == 'lixb':
+			return '李小斌'
+		elif name == 'zhangsj':
+			return '张帅军'
+		elif name == 'xiongp':
+			return '熊鹏'
+		elif name == 'luoh':
+			return '罗慧'
+		elif name == 'xucx':
+			return '徐成勋'
+		elif name == 'wudw':
+			return '吴道万'
+		elif name == 'huangq':
+			return '黄强'
+		elif name == 'ios/android':
+			return '李小斌/熊鹏'
+		elif name == 'zhengzong':
+			return '郑总'
+		else:
+			return '未知'
+
 
 	def changeBugStatus(self, status):
 		if status == '1':
