@@ -18,7 +18,7 @@ _htmlHeader = """
 <html>
 <head>
     <meta charset="utf-8">
-    <title>test</title>
+    <title>缺陷导出表</title>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -26,7 +26,7 @@ _htmlHeader = """
 
 <body>
     <div class="page-header">
-        <h1>缺陷导出表</h1>
+        <h1>缺陷导出表 <small>点击缺陷编号查询详情</small></h1>
     </div>
     <table class="table table-striped">
         <thead>

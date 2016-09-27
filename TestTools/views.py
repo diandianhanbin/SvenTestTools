@@ -8,8 +8,6 @@ import time
 from django.http import JsonResponse
 import requests
 from mobile import adb
-from django.http import StreamingHttpResponse
-
 mdb = mongodb.MongoDB()
 
 
@@ -101,6 +99,10 @@ def updateBugContent(request, bugid):
 
 
 def newproject(request):
+	"""
+	新建项目
+	:return: None
+	"""
 	if request.method == "POST":
 		data = {
 			"name": request.POST['project']
@@ -114,6 +116,10 @@ def newproject(request):
 
 
 def idcardquery(request):
+	"""
+	生成身份证
+	:return: None
+	"""
 	if request.method == "POST":
 		url = 'http://identity.daoapp.io/api'
 		payload = {
@@ -285,6 +291,11 @@ def checkAndroidInfo(request):
 
 
 def exportBug(request):
+	"""
+	导出不同格式的缺陷记录
+	:param request: 使用request.Get.get()方法获取参数"exporttype"和"bugids[]"
+	:return:
+	"""
 	exporttype = request.GET.get("exporttype")
 	bugids = request.GET.getlist("bugids[]")
 	ep = export.Export()
