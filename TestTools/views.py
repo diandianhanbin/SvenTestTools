@@ -335,29 +335,60 @@ def kxiantu(request):
 
 
 def getCharts(request):
-	weijiejue = 0
-	yixiufu = 0
-	yiyanzheng = 0
-	feiwenti = 0
+	dates = []
+	series = []
+	echartSeries = []
 	Project = request.GET.get('project')
-	queryData = {"Project": Project}
-	bugRecord = mdb.dbQueryCondition(config.COLLECTION['bugContent'], **queryData)
-	for x in bugRecord:
-		if x['bugStatus'] == '1':
-			weijiejue += 1
-		elif x['bugStatus'] == '2':
-			yixiufu += 1
-		elif x['bugStatus'] == '3':
-			yiyanzheng += 1
-		elif x['bugStatus'] == '4':
-			feiwenti += 1
+	queryData = {"project": Project}
+	bugArchives = mdb.dbQueryCondition('bugArchive', **queryData)
+	for x in bugArchives:
+		sery = {
+			"yiyanzheng": x['yiyanzheng'],
+			"weijiejue": x['weijiejue'],
+			"yixiufu": x['yixiufu'],
+			"feiwenti": x['feiwenti'],
+			"date": x['date']
+		}
+		dates.append(x['date'])
+		series.append(sery)
+
+	data_weijiejue = {
+		'name': "未解决",
+		"type": "line",
+		"areaStyle": "{normal: {}}",
+		"data": [x['weijiejue'] for x in series]
+	}
+
+	data_yijiejue = {
+		"name": "已修复",
+		"type": "line",
+		"areaStyle": "{normal: {}}",
+		"data": [x['yixiufu'] for x in series]
+	}
+
+	data_yiyanzheng = {
+		"name": "已验证",
+		"type": "line",
+		"areaStyle": "{normal: {}}",
+		"data": [x['yiyanzheng'] for x in series]
+	}
+
+	data_feiwenti = {
+		"name": "非问题",
+		"type": "line",
+		"areaStyle": "{normal: {}}",
+		"data": [x['feiwenti'] for x in series]
+	}
+	echartSeries.append(data_weijiejue)
+	echartSeries.append(data_yijiejue)
+	echartSeries.append(data_yiyanzheng)
+	echartSeries.append(data_feiwenti)
 
 	rstData = {
-		'bugNum': {
-			"未解决": weijiejue,
-			"已修复": yixiufu,
-			"已验证": yiyanzheng,
-			"非问题": feiwenti
-		}
+		'dates': dates,
+		"series": series,
+		'projectName': Project,
+		'EchartData': echartSeries
 	}
+
 	return JsonResponse(rstData, safe=False)

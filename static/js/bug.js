@@ -217,9 +217,9 @@ function DOExportBug() {
 
         $.get('/testtools/exportbug/', sendData, function (rstData) {
             console.log(rstData);
-            if (rstData['errstatus'] == 'ERROR'){
+            if (rstData['errstatus'] == 'ERROR') {
                 alert(rstData['errmsg'])
-            }else if (rstData['errstatus'] == 'OK'){
+            } else if (rstData['errstatus'] == 'OK') {
                 // window.open('缺陷导出表.xls')
                 alert(rstData['errmsg']);
                 $.get('/testtools/downloadbugs/')
@@ -231,13 +231,53 @@ function DOExportBug() {
 function charts() {
     $("#charts").on('click', function () {
         var project = $("#selectProject").val();
+        $("#body").html("<div id='zhexiantu' style='width:800px;height:600px'></div>");
         sendData = {
             "project": project
         };
         $.get('/testtools/getcharts/', sendData, function (rstData) {
-            console.log(rstData)
+            console.log(rstData);
+            var myChart = echarts.init(document.getElementById('zhexiantu'));
+
+            option = {
+                title: {
+                    text: rstData['projectName']+"——缺陷趋势图"
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                // legend: {
+                //     data: rstData['dates']
+                // },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: rstData['dates']
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: rstData['EchartData']
+            };
+
+            myChart.setOption(option);
         });
-        $("#body").html("")
+
 
     })
 }

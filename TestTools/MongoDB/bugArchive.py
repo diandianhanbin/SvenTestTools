@@ -3,6 +3,9 @@
 # Email : diandianhanbin@gmail.com
 import mongodb
 import time
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 mdb = mongodb.MongoDB()
 
@@ -32,9 +35,9 @@ def getBugStatus(projectName, archiveTime=time.strftime('%Y%m%d')):
 		if x['bugStatus'] == '1':
 			weijiejue += 1
 		elif x['bugStatus'] == '2':
-			yiyanzheng += 1
-		elif x['bugStatus'] == '3':
 			yixiufu += 1
+		elif x['bugStatus'] == '3':
+			yiyanzheng += 1
 		elif x['bugStatus'] == '4':
 			feiwenti += 1
 	Date = archiveTime
@@ -88,7 +91,7 @@ if __name__ == '__main__':
 	# while 1:
 	# 	runArchive()
 	# 	time.sleep(3600)
-	# runArchive()
+	# runArchive('20160927')
 	while 1:
 		if time.strftime('%H') == "17":
 			runArchive()
